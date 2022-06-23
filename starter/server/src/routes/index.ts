@@ -1,3 +1,10 @@
+import {
+  addTodo,
+  getTodo,
+  getTodos,
+  removeTodo,
+  updateTodo,
+} from 'controller/todos';
 import { Router } from 'express';
 
 const router = Router();
