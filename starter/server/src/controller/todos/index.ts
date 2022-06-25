@@ -1,14 +1,13 @@
 import { Request, Response } from 'express';
-import TodoModel from 'models/todo';
-import { title } from 'process';
-import { Todo } from 'types/todo';
+import TodoModel from '../../models/todo';
+import { Todo } from '../../types/todo';
 
-export const getTodos = async (req: Request, res: Response) => {
+export const getTodos = async (req: Request, res: Response): Promise<void> => {
   const todos: Todo[] = await TodoModel.find();
   res.status(200).json({ todos });
 };
 
-export const getTodo = async (req: Request, res: Response) => {
+export const getTodo = async (req: Request, res: Response): Promise<void> => {
   await TodoModel.findById(req.params.id, (err, result) => {
     if (err) {
       res.status(400).json({ error: err });
@@ -18,7 +17,7 @@ export const getTodo = async (req: Request, res: Response) => {
   });
 };
 
-export const addTodo = async (req: Request, res: Response) => {
+export const addTodo = async (req: Request, res: Response): Promise<void> => {
   const body: Pick<Todo, 'title' | 'status'> = req.body;
 
   if (!body.title || !body.status) {
@@ -36,56 +35,68 @@ export const addTodo = async (req: Request, res: Response) => {
   const updatedAllTodosAfterSave = await TodoModel.find();
 
   res.status(201).json({
-    message: `ToDo successfully added!`,
-    addedTo: newTodo,
+    message: 'ToDo successfully added!',
+    addedTodo: newTodo,
     allTodosAfterAddition: updatedAllTodosAfterSave,
   });
 };
 
-export const updateTodo = async (req: Request, res: Response) => {
+export const updateTodo = async (req: Request, res: Response): Promise<void> => {
   const {
     params: { id },
     body,
   } = req;
 
-  if (!body.title || !body.status || id) {
+  if (!body.title || !body.status || !id) {
     res.status(401).json({
-      errorMessage: `Validation Error: _id or required properties is not defined`,
+      errorMessage:
+        'Validation Error: _id or required properties is not defined',
     });
     return;
   }
 
-  const updatedTodo = await TodoModel.findByIdAndUpdate({ _id: id }, body);
+  const updatedTodo = await TodoModel.findByIdAndUpdate(id, body);
   const updatedAllTodosAfterUpdate = await TodoModel.find();
 
   if (!updatedTodo) {
     res
-      .send(501)
+      .status(501)
       .json({ status: 501, errorMessage: 'edit ToDo failed. Not implemented' });
 
     return;
-  } else {
-    res.send(200).json({
-      message: 'ToDo successfully edited',
-      updatedTodo,
-      todos: updatedAllTodosAfterUpdate,
-    });
   }
+  res.status(200).json({
+    message: 'ToDo successfully edited',
+    updatedTodo: updatedTodo,
+    todos: updatedAllTodosAfterUpdate,
+  });
 };
 
-export const removeTodo = async (req: Request, res: Response) => {
-  const { id } = req.params;
+export const removeTodo = async (req: Request, res: Response): Promise<void> => {
+  const {
+    params: { id },
+  } = req;
 
-  const deletedTodo = await TodoModel.findByIdAndDelete({ _id: id });
-  const updatedAllTodosAfterDelete = await TodoModel.find();
-
-  if (!deletedTodo) {
-    res.send(401).json({ errorMessage: 'Delete ToDo failed. Not Implemented' });
-  } else {
-    res.send(200).json({
-      message: 'ToDo successfully deleted!',
-      deletedTodo,
-      todos: updatedAllTodosAfterDelete,
-    });
+  if (!id) {
+    res
+      .status(401)
+      .json({ errorMessage: 'Validation error: Params _id is no defined.' });
+    return;
   }
+
+  const removedTodo = await TodoModel.findByIdAndDelete(id);
+  const updatedAllTodosAfterRemove = await TodoModel.find();
+
+  if (!removedTodo) {
+    res
+      .status(501)
+      .json({ errorMessage: 'Delete ToDo failed. Not Implemented' });
+    return;
+  }
+
+  res.status(200).json({
+    message: 'ToDo successfully deleted!',
+    removedTodo,
+    todos: updatedAllTodosAfterRemove,
+  });
 };
