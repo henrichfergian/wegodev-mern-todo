@@ -5,5 +5,5 @@ export const ApiEndpoint = {
   getTodo: (id: string) => `${CONFIG.BASE_URL}/todo/${id}`,
   addTodo: `${CONFIG.BASE_URL}/add-todo`,
   updateTodo: (id: string) => `${CONFIG.BASE_URL}/update-todo/${id}`,
-  removeTodo: (id: string) => `${CONFIG.BASE_URL}/todo/${id}`,
+  removeTodo: (id: string) => `${CONFIG.BASE_URL}/remove-todo/${id}`,
 }
