@@ -1,10 +1,11 @@
+import TaskCard from 'components/TaskCard';
 import React from 'react';
 
-const TaskList = () => {
+const TaskList: React.FC = () => {
   return (
-    <div>
-      <h1>Hello there</h1>
-    </div>
+    <section className="flex flex-col overflow-x-hidden overflow-y-auto h-taskList rounded">
+      <TaskCard title="hello there" />
+    </section>
   );
 };
 
