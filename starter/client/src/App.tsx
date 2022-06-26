@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Header from 'components/Header';
 import TaskList from 'components/TaskList';
 // import Form from 'components/Form';
-// import PlusButton from 'components/PlusButton';
+import PlusButton from 'components/PlusButton';
 
 import PlusIcon from 'assets/svg/plus';
 
@@ -16,6 +16,7 @@ const App: React.FC = () => {
       <TaskList />
       {/* <Form inProp={showForm} onClose={() => setShowForm(false)} /> */}
       {/* <PlusButton onClick={() => setShowForm(!showForm)} /> */}
+      <PlusButton />
     </main>
   );
 };
