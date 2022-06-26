@@ -2,5 +2,5 @@ import { Document } from 'mongoose';
 
 export interface Todo extends Document {
   title: string;
-  status: 'complete' | 'uncomplete';
+  status: 'completed' | 'uncompleted';
 }

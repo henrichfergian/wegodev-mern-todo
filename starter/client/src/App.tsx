@@ -15,7 +15,7 @@ const App: React.FC = () => {
       <Header />
       <TaskList />
       {/* <Form inProp={showForm} onClose={() => setShowForm(false)} /> */}
-      <Form />
+      {/* <Form /> */}
       {/* <PlusButton onClick={() => setShowForm(!showForm)} /> */}
       <PlusButton />
     </main>

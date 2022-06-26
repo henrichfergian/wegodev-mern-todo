@@ -14,7 +14,7 @@ const DeleteModal: React.FC = () => {
         <section className="flex flex-row justify-between">
           <p className="text-darkPurple text-sm subpixel-antialiased tracking-wide font-bold whitespace-normal">
             {"this task isn't completed yet, are you sure want to delete ?"}
-            <p className="text-2xl">&#128540;</p>
+            <span className="text-2xl">&#128540;</span>
           </p>
           <CloseSvgComponent />
         </section>
