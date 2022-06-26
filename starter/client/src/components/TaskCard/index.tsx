@@ -1,5 +1,6 @@
 import ChecklistSvgComponent from 'assets/svg/checklist';
 import TrashSvgComponent from 'assets/svg/trash';
+import DeleteModal from 'components/DeleteModal';
 import React from 'react';
 
 type Props = {
@@ -20,6 +21,7 @@ const TaskCard: React.FC<Props> = ({ title }) => {
           <TrashSvgComponent />
         </span>
       </div>
+      <DeleteModal />
     </div>
   );
 };
