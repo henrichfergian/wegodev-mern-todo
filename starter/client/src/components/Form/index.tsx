@@ -1,8 +1,11 @@
+import { postTodo } from 'api/postTodo';
 import CloseSvgComponent from 'assets/svg/close';
 import classNames from 'classnames';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useMutation, useQueryCache } from 'react-query';
 import { Transition } from 'react-transition-group';
+import { getErrorMessage } from 'utils';
 
 type Props = {
   inProp: boolean;
@@ -47,10 +50,23 @@ const overlayTransitionStyles = {
 };
 
 const Form: React.FC<Props> = ({ inProp, onClose }) => {
+  const cache = useQueryCache();
   const { register, handleSubmit, errors, reset } = useForm<Inputs>();
 
-  const onSubmit = (data: Inputs): void => {
-    console.log('data', data);
+  const [mutate] = useMutation(postTodo, {
+    onSuccess: () => {
+      cache.invalidateQueries('todos');
+    },
+  });
+
+  const onSubmit = async (data: Inputs): Promise<void> => {
+    try {
+      await mutate(data);
+      reset();
+      onClose();
+    } catch (error) {
+      getErrorMessage(error);
+    }
   };
 
   const handleOnClose = () => {
