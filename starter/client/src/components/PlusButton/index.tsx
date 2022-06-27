@@ -1,11 +1,11 @@
 import PlusSvgComponent from 'assets/svg/plus';
 import React from 'react';
 
-// type Props = {
-//   onClick: Function
-// }
+type Props = {
+  onClick: () => void;
+};
 
-const PlusButton: React.FC = () => {
+const PlusButton: React.FC<Props> = ({ onClick }) => {
   return (
     <div
       className="absolute transform -translate-x-1/2 -translate-y-1/2"
@@ -13,10 +13,9 @@ const PlusButton: React.FC = () => {
         left: '50%',
         bottom: '4%',
       }}
+      onClick={onClick}
     >
-      <button>
-        <PlusSvgComponent className="w-10 h-10 text-white" />
-      </button>
+      <PlusSvgComponent className="w-10 h-10 text-white" />
     </div>
   );
 };

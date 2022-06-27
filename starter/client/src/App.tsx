@@ -14,10 +14,8 @@ const App: React.FC = () => {
     <main className="container relative bg-darkPurple mx-auto max-w-lg p-4 box-border min-h-screen">
       <Header />
       <TaskList />
-      {/* <Form inProp={showForm} onClose={() => setShowForm(false)} /> */}
-      {/* <Form /> */}
-      {/* <PlusButton onClick={() => setShowForm(!showForm)} /> */}
-      <PlusButton />
+      <Form inProp={showForm} onClose={() => setShowForm(false)} />
+      <PlusButton onClick={() => setShowForm(!showForm)} />
     </main>
   );
 };
